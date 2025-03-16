@@ -8,7 +8,7 @@ abstract interface class ActivityLocalDs {
 
 class ActivityLocalDsImpl implements ActivityLocalDs {
   static const String _boxName = 'activities';
-  static const String _lastActivityKey = 'last_activity';
+  // static const String _lastActivityKey = 'last_activity';
 
   // save activity to local storage
   @override
