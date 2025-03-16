@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/result/result.dart';
+import 'package:hendshake_test_flutter/core/shared/provider/get_info_provider.dart';
 import 'package:hendshake_test_flutter/features/activity/domain/entity/activity.dart';
 import 'package:hendshake_test_flutter/features/history/domain/usecase/get_history_case.dart';
+import 'package:hendshake_test_flutter/init_dependencies.main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class HistoryProvider extends ChangeNotifier {
   final GetHistoryCase getHistoryCase;
-  HistoryProvider(this.getHistoryCase);
+  final GetInfoProvider getInfoProvider;
+  HistoryProvider(this.getHistoryCase, this.getInfoProvider);
 
   // HistoryProvider({required this.activityRepository});
   bool _isLoading = false;
@@ -18,6 +22,8 @@ class HistoryProvider extends ChangeNotifier {
 
   List<Activity> _history = [];
   List<Activity> get history => _history;
+
+  String selectedActivityType = serviceLocator<SharedPreferences>().getString('selectedActivityType') ?? 'none';
 
   Future<ReturnResult> getHistory() async {
     _isLoading = true;

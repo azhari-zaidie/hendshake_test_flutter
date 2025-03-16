@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hendshake_test_flutter/core/shared/provider/get_info_provider.dart';
 import 'package:hendshake_test_flutter/features/activity/presentation/provider/activity_provider.dart';
 import 'package:hendshake_test_flutter/features/history/presentation/provider/history_provider.dart';
 import 'package:hendshake_test_flutter/features/home/presentation/provider/home_provider.dart';
@@ -19,6 +20,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => serviceLocator<HomeProvider>()),
         ChangeNotifierProvider(create: (context) => serviceLocator<ActivityProvider>()),
         ChangeNotifierProvider(create: (context) => serviceLocator<HistoryProvider>()),
+        ChangeNotifierProvider(create: (context) => serviceLocator<GetInfoProvider>()),
       ],
       child: const MyApp(),
     ),

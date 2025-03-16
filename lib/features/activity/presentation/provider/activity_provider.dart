@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/result/result.dart';
-import 'package:hendshake_test_flutter/core/utils/usecase.dart';
 import 'package:hendshake_test_flutter/features/activity/domain/entity/activity.dart';
 import 'package:hendshake_test_flutter/features/activity/domain/usecase/get_activity_case.dart';
+import 'package:hendshake_test_flutter/init_dependencies.main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivityProvider extends ChangeNotifier {
@@ -47,7 +47,7 @@ class ActivityProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try{
-      final result = await getActivityCase.call(NoParams());
+      final result = await getActivityCase.call(serviceLocator<SharedPreferences>().getString('selectedActivityType') ?? 'none');
       return result.fold(
         (failure) {
           _isError = true;
@@ -69,6 +69,11 @@ class ActivityProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // Future<void> getActivityFromLocalStorage() async {
+  //   final activityType = localStorage.getString('activityType');
+  //   await getActivity(activityType ?? '');
+  // }
 
   // clear error
   void clearError(){

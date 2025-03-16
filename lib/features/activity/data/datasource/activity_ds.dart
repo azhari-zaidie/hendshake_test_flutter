@@ -6,7 +6,9 @@ import 'package:hendshake_test_flutter/features/activity/data/model/activity_mod
 import 'package:http/http.dart' as http;
 
 abstract interface class ActivityDs {
-  Future<ActivityModel> getActivity();
+  Future<ActivityModel> getActivity({
+    required String activityType,
+  });
 }
 
 class ActivityDsImpl implements ActivityDs {
@@ -15,9 +17,15 @@ class ActivityDsImpl implements ActivityDs {
   ActivityDsImpl({required this.localDs});
 
   @override
-  Future<ActivityModel> getActivity() async {
+  Future<ActivityModel> getActivity({
+    required String activityType,
+  }) async {
     try{
-      final response = await http.get(Uri.parse('https://bored.api.lewagon.com/api/activity'));
+      String url = (activityType == 'none') 
+      ? 'https://bored.api.lewagon.com/api/activity' 
+      : 'https://bored.api.lewagon.com/api/activity?type=$activityType';
+
+      final response = await http.get(Uri.parse(url));
       if(response.statusCode == 200){
         final json = jsonDecode(response.body);
         // if(json is List){

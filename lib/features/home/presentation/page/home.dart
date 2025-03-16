@@ -31,7 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 // Button to navigate to the activity page
                 ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, AppRoute.activity),
+                  onPressed: () => Navigator.pushNamed(
+                    context, 
+                    AppRoute.activity,
+                    arguments: homeProvider.selectedActivityType,   
+                  ),
                   child: const Text('Activity'),
                 ),
         

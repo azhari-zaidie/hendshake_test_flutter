@@ -9,9 +9,11 @@ class ActivityRepositoryImpl implements ActivityRepository {
   ActivityRepositoryImpl(this.activityDs);
 
   @override
-  Future<Either<Failure, Activity>> getActivity() async {
+  Future<Either<Failure, Activity>> getActivity({
+    required String activityType,
+  }) async {
     try{
-      final result = await activityDs.getActivity();
+      final result = await activityDs.getActivity(activityType: activityType);
       return right(result);
     }catch(e){
       return left(Failure(e.toString()));

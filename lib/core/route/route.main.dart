@@ -4,7 +4,6 @@ part of 'route.dart';
 class AppRoute {
   static const String home = '/';
   static const String activity = '/activity';
-  // static const String activityDetail = '/activity/:id';
   static const String history = '/history';
   
   static Map<String, WidgetBuilder> get routes => {

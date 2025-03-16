@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/route/route.dart';
 import 'package:hendshake_test_flutter/features/activity/presentation/provider/activity_provider.dart';
+import 'package:hendshake_test_flutter/features/activity/presentation/widget/activity_card.dart';
 import 'package:provider/provider.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -42,22 +43,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
           }else if(activityProvider.isError){
             return Center(child: Text(activityProvider.errorMessage, textAlign: TextAlign.center,));
           }
-
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Text('Name : ${activityProvider.activity.activity}', textAlign: TextAlign.center,),
-              Text('Type : ${activityProvider.activity.type}', textAlign: TextAlign.center,),
-              Text('Participants : ${activityProvider.activity.participants}', textAlign: TextAlign.center,),
-              Text('Price : ${activityProvider.activity.price}', textAlign: TextAlign.center,),
-              Text('Link : ${activityProvider.activity.link}', textAlign: TextAlign.center,),
-              Text('Key : ${activityProvider.activity.key}', textAlign: TextAlign.center,),
-            ],
-            ),
-          );
+          return ActivityCard(activity: activityProvider.activity);
         },
       ),
     );

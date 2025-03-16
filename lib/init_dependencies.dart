@@ -8,7 +8,7 @@ Future<void> initDependencies() async {
   // Initialize Hive
   await initHive();
 
-  _initHome();
+  _initProvider();
   _initActivity();
   _initHistory();
   SharedPreferences localStore = await SharedPreferences.getInstance();
@@ -16,8 +16,11 @@ Future<void> initDependencies() async {
   // await Get.putAsync(() => AuthService().init());
 }
 
-void _initHome() {
-  serviceLocator.registerLazySingleton<HomeProvider>(() => HomeProvider(serviceLocator()));
+void _initProvider() {
+  // inittialize common providers
+  serviceLocator
+  ..registerLazySingleton<HomeProvider>(() => HomeProvider(serviceLocator()))
+  ..registerLazySingleton<GetInfoProvider>(() => GetInfoProvider(serviceLocator()));
 }
 
 void _initActivity() {
@@ -34,5 +37,5 @@ void _initHistory() {
    ..registerFactory<HistoryDs>(() => HistoryDsImpl())
    ..registerFactory<HistoryRepository>(() => HistoryRepositoryImpl(serviceLocator()))
    ..registerFactory<GetHistoryCase>(() => GetHistoryCase(serviceLocator()))
-   ..registerLazySingleton<HistoryProvider>(() => HistoryProvider(serviceLocator()));
+   ..registerLazySingleton<HistoryProvider>(() => HistoryProvider(serviceLocator(),serviceLocator()));
 }

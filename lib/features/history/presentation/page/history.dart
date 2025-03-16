@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/route/route.dart';
 import 'package:hendshake_test_flutter/features/history/presentation/provider/history_provider.dart';
+import 'package:hendshake_test_flutter/features/history/presentation/widget/history_list.dart';
 import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<HistoryProvider>(context, listen: false).getInfoProvider.getInfo();
       Provider.of<HistoryProvider>(context, listen: false).getHistory();
     });
   }
@@ -30,33 +32,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ],
         title: const Text('History'),
       ),
-      body: Consumer<HistoryProvider>(
-        builder: (context, historyProvider, child) {
-          if(historyProvider.isLoading){
-            return const Center(child: CircularProgressIndicator());
-          }else if(historyProvider.isError){
-            return Center(child: Text(historyProvider.errorMessage, textAlign: TextAlign.center,));
-          }
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: historyProvider.history.length,
-            itemBuilder: (context, index) {
-            return ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              title: Text(historyProvider.history[index].activity),
-              subtitle: Text(
-                '${_formatDateTime(historyProvider.history[index].createdAt)} | Price: ${historyProvider.history[index].price}',
-              ),
-              trailing: Text(historyProvider.history[index].type),
-              leading: Text((index+1).toString()),
-            );
-          },);
-        },
+      body: SafeArea(
+        bottom: true,
+        child: Consumer<HistoryProvider>(
+          builder: (context, historyProvider, child) {
+            if(historyProvider.isLoading){
+              return const Center(child: CircularProgressIndicator());
+            }else if(historyProvider.isError){
+              return Center(child: Text(historyProvider.errorMessage, textAlign: TextAlign.center,));
+            }
+            return HistoryList(
+              history: historyProvider.history, 
+              selectedActivityType: historyProvider.getInfoProvider.activityType);
+          },
+        ),
       ),
     );
-  }
-
-  String _formatDateTime(DateTime dateTime) {
-    return '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}';
   }
 }

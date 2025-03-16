@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:hendshake_test_flutter/core/hive/hive_init.dart';
+import 'package:hendshake_test_flutter/core/shared/provider/get_info_provider.dart';
 import 'package:hendshake_test_flutter/features/activity/data/datasource/activity_ds.dart';
 import 'package:hendshake_test_flutter/features/activity/data/datasource/activity_local_ds.dart';
 import 'package:hendshake_test_flutter/features/activity/data/repository/activity_repository_impl.dart';
