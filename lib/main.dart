@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:hendshake_test_flutter/features/activity/presentation/provider/activity_provider.dart';
+import 'package:hendshake_test_flutter/features/history/presentation/provider/history_provider.dart';
+import 'package:hendshake_test_flutter/features/home/presentation/provider/home_provider.dart';
+import 'package:hendshake_test_flutter/init_dependencies.main.dart';
+import 'package:provider/provider.dart';
 import 'package:hendshake_test_flutter/core/route/route.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize dependencies
+  await initDependencies();
+
+  // run app
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => serviceLocator<HomeProvider>()),
+        ChangeNotifierProvider(create: (context) => serviceLocator<ActivityProvider>()),
+        ChangeNotifierProvider(create: (context) => serviceLocator<HistoryProvider>()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 
