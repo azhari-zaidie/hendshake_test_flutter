@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   
                   // Button to navigate to the activity page
                   AppButton(
-                    text: 'Find Activities',
+                    text: 'Next',
                     icon: Icons.search,
                     onPressed: () => Navigator.pushNamed(
                       context, 
