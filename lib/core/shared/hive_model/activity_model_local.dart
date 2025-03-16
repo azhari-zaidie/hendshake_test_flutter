@@ -23,6 +23,7 @@ class ActivityModel extends HiveObject {
   final String link;
   
   @HiveField(6)
+  // ignore: annotate_overrides
   final String key;
 
   @HiveField(7)

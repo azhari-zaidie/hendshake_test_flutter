@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/route/route.dart';
+import 'package:hendshake_test_flutter/core/shared/widgets/app_bar_widget.dart';
+import 'package:hendshake_test_flutter/core/shared/widgets/app_button.dart';
+import 'package:hendshake_test_flutter/core/shared/widgets/app_error_message.dart';
+import 'package:hendshake_test_flutter/core/shared/widgets/app_loading_indicator.dart';
 import 'package:hendshake_test_flutter/features/activity/presentation/provider/activity_provider.dart';
 import 'package:hendshake_test_flutter/features/activity/presentation/widget/activity_card.dart';
 import 'package:provider/provider.dart';
@@ -24,27 +28,49 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Activity'),
+      appBar: AppBarWidget(
+        title: 'Activity',
         actions: [
-          ElevatedButton(onPressed: (){
-            // go to history page
-            Navigator.pushNamed(context, AppRoute.history);
-          }, child: Row(children: [
-            Icon(Icons.history),
-            Text('History'),
-          ],))
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: AppButton(
+              text: 'History',
+              icon: Icons.history,
+              width: 120,
+              height: 40,
+              onPressed: () => Navigator.pushNamed(context, AppRoute.history),
+            ),
+          ),
         ],
       ),
-      body:  Consumer<ActivityProvider>(
-        builder: (context, activityProvider, child) {
-          if(activityProvider.isLoading){
-            return const Center(child: CircularProgressIndicator());
-          }else if(activityProvider.isError){
-            return Center(child: Text(activityProvider.errorMessage, textAlign: TextAlign.center,));
-          }
-          return ActivityCard(activity: activityProvider.activity);
-        },
+      body: SafeArea(
+        child: Consumer<ActivityProvider>(
+          builder: (context, activityProvider, child) {
+            if (activityProvider.isLoading) {
+              return const AppLoadingIndicator();
+            } else if (activityProvider.isError) {
+              return AppErrorMessage(
+                message: activityProvider.errorMessage,
+                onRetry: () => activityProvider.getActivity(),
+              );
+            }
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ActivityCard(activity: activityProvider.activity),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: AppButton(
+                      text: 'Get New Activity',
+                      icon: Icons.refresh,
+                      onPressed: () => activityProvider.getActivity(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

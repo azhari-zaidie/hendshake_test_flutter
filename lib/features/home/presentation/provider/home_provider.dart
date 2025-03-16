@@ -21,6 +21,9 @@ class HomeProvider extends ChangeNotifier {
 
   String _selectedActivityType = 'none';
   String get selectedActivityType => _selectedActivityType;
+  
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   void setSelectedActivityType(String value) {
     _selectedActivityType = value;
@@ -31,9 +34,19 @@ class HomeProvider extends ChangeNotifier {
 
   // get details
   Future<void> getDetails() async {
-    // get the selected activity type from local storage
-    final selectedActivityType = localStorage.getString('selectedActivityType');
-    _selectedActivityType = selectedActivityType ?? 'none';
+    _isLoading = true;
     notifyListeners();
+    
+    try {
+      // get the selected activity type from local storage
+      final selectedActivityType = localStorage.getString('selectedActivityType');
+      _selectedActivityType = selectedActivityType ?? 'none';
+    } catch (e) {
+      // Handle any errors
+      debugPrint('Error loading preferences: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 }

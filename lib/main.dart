@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hendshake_test_flutter/core/shared/provider/get_info_provider.dart';
+import 'package:hendshake_test_flutter/core/shared/theme/app_theme.dart';
 import 'package:hendshake_test_flutter/features/activity/presentation/provider/activity_provider.dart';
 import 'package:hendshake_test_flutter/features/history/presentation/provider/history_provider.dart';
 import 'package:hendshake_test_flutter/features/home/presentation/provider/home_provider.dart';
@@ -37,10 +38,8 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoute.home,
       routes: AppRoute.routes,
       title: 'Hendshake Test',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
     );
   }
 }

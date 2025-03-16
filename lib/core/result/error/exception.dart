@@ -3,6 +3,5 @@ class ServerException implements Exception{
   const ServerException(this.message);
 
   @override
-  /// TODO :: tukar server exception ni akan datang
   String toString() => 'ServerException: $message';
 }
