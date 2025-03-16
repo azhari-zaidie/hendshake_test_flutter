@@ -39,7 +39,9 @@ class HistoryProvider extends ChangeNotifier {
         },
         (history) {
           resetError();
-          _history = history..sort((a, b) => a.price.compareTo(b.price));
+          // the history is sorted by latest activity
+          // _history = history..sort((a, b) => a.price.compareTo(b.price));
+          _history = history;
           // print('history: ${_history.map((e) => e.activity)}');
           return ReturnResult.success(history, 'Success', '200');
         },

@@ -58,8 +58,8 @@ class AppButton extends StatelessWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 20, color: Colors.white,),
-          const SizedBox(width: 8),
+          // Icon(icon, size: 10, color: Colors.white,),
+          // const SizedBox(width: 8),s
           Text(text),
         ],
       );
